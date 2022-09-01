@@ -1,4 +1,5 @@
-
+#Here we talked about on how to Deploying AWS Lambda As Docker Container Images
+# Go through this: https://medium.com/@kumar.santosh5187/deploying-aws-lambda-as-docker-container-images-9d1b36100174
 
 Quick steps to build a Lambda function as a Docker Container Image, push it to ECR, and manually deploy using the lambda console. Hope this will provide you with an idea of how easy it is to integrate Docker into the Lambda build process through ECR
 
