@@ -1,5 +1,5 @@
-#Here we talked about on how to Deploying AWS Lambda As Docker Container Images
-# Go through this: https://medium.com/@kumar.santosh5187/deploying-aws-lambda-as-docker-container-images-9d1b36100174
+# Here we talked about on how to Deploying AWS Lambda As Docker Container Images
+Go through this: https://medium.com/@kumar.santosh5187/deploying-aws-lambda-as-docker-container-images-9d1b36100174
 
 Quick steps to build a Lambda function as a Docker Container Image, push it to ECR, and manually deploy using the lambda console. Hope this will provide you with an idea of how easy it is to integrate Docker into the Lambda build process through ECR
 
@@ -16,14 +16,14 @@ Here are steps to follow -
 
 
 In order to build the application, we need to use a Dockerfile. A Dockerfile is a script of instructions that is used to create a container image. Create a file named Dockerfile in the same folder as the file package.json
+
+```bash
 FROM node:16-alpine
-
 WORKDIR /usr/src/app
-
 COPY package*.json ./
-
 RUN npm install — production
 COPY . .
+```
 
 #RUN npm run build
 
@@ -33,8 +33,8 @@ Dockerfile has no file extension like .txt
 
 2. The Compose file is a YAML file defining services, networks, and volumes for a Docker application. here is one created for login module docker-compose.yml
 
+```bash
 version: ‘3.8’
-
 services:
 dev:container_name: test
 image: test:1.0.0
@@ -52,11 +52,12 @@ volumes:
 — /usr/src/app/node_modules
 restart: unless-stopped
 networks: nesjs-network:
-
+```
 3. Open a terminal and go to the app directory with the Dockerfile. Now build the container image using the docker build command.
 
+```bash
 docker build . -t test
-
+```
 This command used the Dockerfile to build a new container image.
 
 Push Lambda container image to Amazon ECR
@@ -67,14 +68,17 @@ Create a repository(Amazon Elastic Container Registry) on aws if already not cre
 
 
 Authentication
+```bash
 aws ecr get-login-password — region ap-south-1 | docker login — username AWS — password-stdin *.dkr.ecr.ap-south-1.amazonaws.com
-
+```
 Tag your image
+```bash
 docker tag login:latest *.dkr.ecr.ap-south-1.amazonaws.com/test:latest
-
+```
 Pushing image to ECR
+```bash
 docker push *.dkr.ecr.ap-south-1.amazonaws.com/test:latest
-
+```
 3. Deploy Lambda container image with AWS Lambda console
 
 
